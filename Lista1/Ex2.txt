@@ -1,0 +1,26 @@
+#include <stdio.h>
+
+// Definição da struct Tipo
+struct Tipo {
+    int valorInteiro;
+    float valorFlutuante;
+    char letra;
+};
+
+int main() {
+    // Declarando uma variável do tipo Tipo
+    struct Tipo meuTipo;
+
+    // Atribuindo valores aos campos da variável
+    meuTipo.valorInteiro = 42;
+    meuTipo.valorFlutuante = 3.14;
+    meuTipo.letra = 'A';
+
+    // Imprimindo os valores
+    printf("Valor Inteiro: %d\n", meuTipo.valorInteiro);
+    printf("Valor Flutuante: %.2f\n", meuTipo.valorFlutuante);
+    printf("Letra: %c\n", meuTipo.letra);
+
+    return 0;
+}
+Neste exemplo, você define uma struct Tipocom os campos valorInteiro, valorFlutuantee let
