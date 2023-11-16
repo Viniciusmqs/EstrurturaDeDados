@@ -1,0 +1,70 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Definindo a estrutura do nó da lista
+struct Node {
+    char product[50];
+    float price;
+    struct Node* next;
+};
+
+// Função para criar um novo nó
+struct Node* createNode(char product[], float price) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    strcpy(newNode->product, product);
+    newNode->price = price;
+    newNode->next = NULL;
+    return newNode;
+}
+
+// Função para inserir na lista ordenada
+void insertOrdered(struct Node** head, char product[], float price) {
+    struct Node* newNode = createNode(product, price);
+
+    // Caso a lista esteja vazia ou o novo nó seja mais barato que o primeiro nó
+    if (*head == NULL || price < (*head)->price) {
+        newNode->next = *head;
+        *head = newNode;
+    } else {
+        struct Node* current = *head;
+
+        // Encontrar o ponto de inserção
+        while (current->next != NULL && current->next->price < price) {
+            current = current->next;
+        }
+
+        // Inserir o novo nó na posição correta
+        newNode->next = current->next;
+        current->next = newNode;
+    }
+}
+
+// Função principal
+int main() {
+    int size;
+    char product[50];
+    float price;
+    struct Node* head = NULL;
+
+    printf("Informe o tamanho da lista de compras: ");
+    scanf("%d", &size);
+
+    for (int i = 0; i < size; i++) {
+        printf("Informe o nome do produto %d: ", i + 1);
+        scanf("%s", product);
+        printf("Informe o preço do produto %d: ", i + 1);
+        scanf("%f", &price);
+        insertOrdered(&head, product, price);
+    }
+
+    // Exibindo a lista ordenada de compras
+    printf("\nLista Ordenada de Compras: \n");
+    printf("%-20s %-10s\n", "Produto", "Preço");
+    struct Node* current = head;
+    while (current != NULL) {
+        printf("%-20s %-10.2f\n", current->product, current->price);
+        current = current->next;
+    }
+
+    return 0;
+}

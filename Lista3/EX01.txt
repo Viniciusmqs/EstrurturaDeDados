@@ -1,0 +1,63 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Definindo a estrutura do nó da lista
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Função para criar um novo nó
+struct Node* createNode(int value) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = NULL;
+    return newNode;
+}
+
+// Função para inserir na lista ordenada
+void insertOrdered(struct Node** head, int value) {
+    struct Node* newNode = createNode(value);
+
+    // Caso a lista esteja vazia ou o novo nó seja menor que o primeiro nó
+    if (*head == NULL || value < (*head)->data) {
+        newNode->next = *head;
+        *head = newNode;
+    } else {
+        struct Node* current = *head;
+
+        // Encontrar o ponto de inserção
+        while (current->next != NULL && current->next->data < value) {
+            current = current->next;
+        }
+
+        // Inserir o novo nó na posição correta
+        newNode->next = current->next;
+        current->next = newNode;
+    }
+}
+
+// Função principal
+int main() {
+    int size, value;
+    struct Node* head = NULL;
+
+    printf("Informe o tamanho da lista: ");
+    scanf("%d", &size);
+
+    for (int i = 0; i < size; i++) {
+        printf("Informe o valor %d: ", i + 1);
+        scanf("%d", &value);
+        insertOrdered(&head, value);
+    }
+
+    // Exibindo a lista ordenada
+    printf("\nLista Ordenada: ");
+    struct Node* current = head;
+    while (current != NULL) {
+        printf("%d ", current->data);
+        current = current->next;
+    }
+
+    return 0;
+}
